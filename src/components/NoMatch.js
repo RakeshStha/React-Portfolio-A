@@ -6,3 +6,4 @@ export const NoMatch = () => (
     <p> Try again later. Thank You!</p>
     </div>
 )
+  export default NoMatch;
