@@ -16,7 +16,7 @@ class Main extends Component{
           <NavigationBar/>
           <Router>
             <Switch>
-              <Route exact path="/React-Portfolio-Website" component={Home}/>
+              <Route exact path="/React-Portfolio-Website/" component={Home}/>
               <Route path="/about" component={About}/>
               <Route path="/contact" component={Contact}/>
               <Route component={NoMatch}/>
