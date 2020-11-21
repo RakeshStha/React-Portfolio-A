@@ -1,14 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {Container, Jumbotron, Card } from 'react-bootstrap';
 
-class data extends Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            
-        }
-    }
-}
+import Services from './Services';
+
+
 
 export const About = () => (
 
@@ -20,14 +15,12 @@ export const About = () => (
         desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum 
         </Jumbotron>
         <Card>
-            <Card.Body>
-                <Card.Title><h2 className="text-center">Our Services : </h2></Card.Title>
-                <div>
-
-
-                </div>
-            </Card.Body>
+          <Card.Body>
+          <Card.Title><h2 className="text-center"> Our Services</h2></Card.Title>
+          <Services/>
+          </Card.Body>
         </Card>
+        
         <br></br>
         </Container>
         
