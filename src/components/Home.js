@@ -29,6 +29,7 @@ class  Home extends Component{
 
     handleSubmit = (event) =>{
         alert(`${this.state.username} ${this.state.email} ${this.state.message}`)
+        console.log(this.state)
         event.preventDefault()
     }
 
