@@ -1,8 +1,39 @@
-import React from 'react'
+import React, {Component} from 'react'
 import {Container, Row, Col, Card, Form, Button, Image} from 'react-bootstrap';
 
-export const Home = () => (
-    
+class  Home extends Component{
+    constructor(props){
+        super(props)
+        this.state = {
+            username:'',
+            email:'',
+            message:''
+        }
+    }
+
+    handleUsernameChange = (event) => { //event as parameter to capture value
+        this.setState({
+            username: event.target.value
+        })
+    }
+    handleEmailChange = (event) => { //event as parameter to capture value
+        this.setState({
+            email: event.target.value
+        })
+    }
+    handleMessageChange = (event) => { //event as parameter to capture value
+        this.setState({
+            message: event.target.value
+        })
+    }
+
+    handleSubmit = (event) =>{
+        alert(`${this.state.username} ${this.state.email} ${this.state.message}`)
+        event.preventDefault()
+    }
+
+    render(){
+    return(
        
         <Container>
             <Row>
@@ -37,20 +68,32 @@ export const Home = () => (
             <Card> 
                 <Card.Body>
                 <Card.Title className="text-center"><h2>Contact Me</h2></Card.Title>
-                <Form>
+                
+                <Form onSubmit={this.handleSubmit}>
                     <Form.Group controlId="formName">
                     <Form.Label>Name :</Form.Label>
-                    <Form.Control type="text" placeholder="Enter your Name" />
+                    <Form.Control type="text" 
+                    value={this.state.username} 
+                    onChange={this.handleUsernameChange} 
+                    placeholder="Enter your Name" />
                     </Form.Group>
                     <Form.Group controlId="formEmail">
                     <Form.Label>Email Address :</Form.Label>
-                    <Form.Control type="email" placeholder="Enter your email" />
+                    <Form.Control type="email" 
+                    value={this.state.email} 
+                    onChange={this.handleEmailChange}
+                    placeholder="Enter your email" />
                     </Form.Group>
                     <Form.Group controlId="form Mesage">
                     <Form.Label>Your Message :</Form.Label>
-                    <Form.Control as="textarea" rows={3} />
+                    <Form.Control as="textarea" 
+                    value={this.state.message}
+                    onChange={this.handleMessageChange} 
+                    rows={3} />
                     </Form.Group>
-                    <Button variant="primary" >Submit</Button>
+                    <Form.Group className="text-center">
+                    <Button type="submit" variant="primary" >Submit</Button>
+                    </Form.Group>
                 </Form>
                 </Card.Body>
             </Card>
@@ -79,4 +122,6 @@ export const Home = () => (
         
    
 )
+    }
+    }
   export default Home;
