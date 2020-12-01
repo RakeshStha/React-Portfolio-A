@@ -28,7 +28,7 @@ class  Home extends Component{
     }
 
     handleSubmit = (event) =>{
-        alert(`${this.state.username} ${this.state.email} ${this.state.message}`)
+        alert("JSON :" +JSON.stringify(this.state))
         console.log(this.state)
         event.preventDefault()
     }

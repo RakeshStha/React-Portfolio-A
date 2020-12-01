@@ -58,7 +58,7 @@ class  Contact extends Component{
         })
     }
     handleSubmit = (event) =>{
-        alert(`${this.state.fname} ${this.state.lname} ${this.state.email} ${this.state.range} ${this.state.male} ${this.state.female} ${this.state.custom} ${this.state.message}`)
+        alert("JSON :" + JSON.stringify(this.state))
         console.log(this.state)
         event.preventDefault()
     }
