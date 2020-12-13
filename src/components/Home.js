@@ -68,30 +68,44 @@ class  Home extends Component{
                 <Col sm={6}>
             <Card> 
                 <Card.Body>
+
                 <Card.Title className="text-center"><h2>Contact Me</h2></Card.Title>
                 
                 <Form onSubmit={this.handleSubmit}>
+
                     <Form.Group controlId="formName">
                     <Form.Label>Name :</Form.Label>
+
                     <Form.Control type="text" 
+                    name="username"
                     value={this.state.username} 
                     onChange={this.handleUsernameChange} 
                     placeholder="Enter your Name" />
                     </Form.Group>
+
+
                     <Form.Group controlId="formEmail">
                     <Form.Label>Email Address :</Form.Label>
+
                     <Form.Control type="email" 
+                    name="email"
                     value={this.state.email} 
                     onChange={this.handleEmailChange}
                     placeholder="Enter your email" />
                     </Form.Group>
+
+
                     <Form.Group controlId="form Mesage">
                     <Form.Label>Your Message :</Form.Label>
+
                     <Form.Control as="textarea" 
+                    name="message"
                     value={this.state.message}
                     onChange={this.handleMessageChange} 
                     rows={3} />
                     </Form.Group>
+
+
                     <Form.Group className="text-center">
                     <Button type="submit" variant="primary" >Submit</Button>
                     </Form.Group>

@@ -2,3 +2,8 @@
   margin: 10px;
  background-image: url('https://static.toiimg.com/thumb/62264657/Pink-river-Canada.jpg?width=1200&height=900'); 
 }
+.errorMessage{
+  color: red;
+  font-size: 0.75em;
+  display: relative;
+}

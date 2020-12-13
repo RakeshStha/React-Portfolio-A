@@ -2,68 +2,86 @@ import React, {Component} from 'react';
 import {Container, Card, Jumbotron, Form, Button} from 'react-bootstrap';
 import '../App.css';
 
+const emailRegex = RegExp(
+    /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
+
+const formValid = ({ formErrors, ...rest}) => { //...rest as a parameter with infinite value
+    let valid = true;
+
+    //For empty and error string validation
+    Object.values(formErrors).forEach(val => {
+        val.length > 0 && (valid = false);
+    })
+
+    //validate the form which was filled out
+    Object.values(rest).forEach(val=>{
+        val === null && (valid = false);
+    });
+    return valid;
+} ;
+
+
 class  Contact extends Component{
     constructor(props){
         super(props)
         this.state = {
-            fname:'',
-            lname:'',
-            email:'',
-            range:'',
-            male:'',
-            female:'',
-            custom:'',
-            message:''
+            fname:null,
+            lname:null,
+            email:null,
+            message:null,
+            formErrors: {
+                fname:"",
+                lname:"",
+                email:"",
+                message:""
+            }
+        };
+    }
+
+    handleSubmit = e =>{
+        e.preventDefault();
+        if (formValid(this.state)){
+            alert(JSON.stringify(this.state))
+            e.preventDefault();
+        }
+        else {
+            alert(` FORM INVALID`)
+            e.preventDefault();
         }
     }
 
-    handleFirstnameChange = (event) =>{
-        this.setState({
-            fname:event.target.value
-        })
-    }
-    handleLastnameChange = (event) =>{
-        this.setState({
-            lname:event.target.value
-        })
-    }
-    handleEmailChange = (event) =>{
-        this.setState({
-            email:event.target.value
-        })
-    }
-    handleRangeChange = (event) =>{
-        this.setState({
-            range:event.target.value
-        })
-    }
-    handleMaleChange = (event) =>{
-        this.setState({
-            male:event.target.value
-        })
-    }
-    handleFemaleChange = (event) =>{
-        this.setState({
-            female:event.target.value
-        })
-    }
-    handleCustomChange = (event) =>{
-        this.setState({
-            custom:event.target.value
-        })
-    }
-    handleMessageChange = (event) =>{
-        this.setState({
-            message:event.target.value
-        })
-    }
-    handleSubmit = (event) =>{
-        alert("JSON :" + JSON.stringify(this.state))
-        console.log(this.state)
-        event.preventDefault()
-    }
+    handleChange = e => {
+        e.preventDefault();
+        const {name, value} = e.target;
+        let formErrors = {...this.state.formErrors};
+
+        switch (name) {
+            case "fname" :
+                formErrors.fname =
+                value.length < 3 ? "Minimum 3 characters required" : "";
+                break;
+            case "lname" :
+                formErrors.lname =
+                value.length < 3 ? "Minimum 3 characters required" : "";
+                break;
+            case "email" :
+                formErrors.email = emailRegex.test(value)
+                ?""
+                : "Invalid email address"
+                break;
+            case "message" :
+                formErrors.message =
+                value.length < 10 ? "Minimum 10 characters required" : "";
+                break;
+            default:
+                break;
+        }
+        this.setState({formErrors, [name]:value}, ()=> console.log(this.state));
+
+    } 
 
     render(){
+        const {formErrors} = this.state;
         return(
     <Container>
         <Jumbotron className="con">
@@ -72,57 +90,48 @@ class  Contact extends Component{
         <Card>
             <Card.Body>
                 <Card.Title><p className="text-center">Fill up the form. <b>Thank You!</b></p></Card.Title>
-            <Form  onSubmit={this.handleSubmit}> 
+            <Form  onSubmit={this.handleSubmit} noValidate> 
+
                 <Form.Group controlId="firstname">
                     <Form.Label>First Name :</Form.Label>
                     <Form.Control type="text" 
-                    value={this.state.fname} 
-                    onChange={this.handleFirstnameChange} 
+                     name="fname"
+                    onChange={this.handleChange} 
+                    noValidate
                      placeholder="Your First Name"/>
+
+                     {formErrors.fname.length > 0 && ( <span className="errorMessage">{formErrors.fname}</span>)}
                 </Form.Group>
+
                 <Form.Group controlId="lastname">
                     <Form.Label>Last Name :</Form.Label>
                     <Form.Control type="text" 
-                    value={this.state.lname} 
-                    onChange={this.handleLastnameChange} 
-                    placeholder="Your Last Name"/>
+                     name="lname"
+                    onChange={this.handleChange} 
+                    placeholder="Your Last Name"
+                    noValidate/>
+                    {formErrors.lname.length > 0 && ( <span className="errorMessage">{formErrors.lname}</span>)}
                 </Form.Group>
+
                 <Form.Group controlId="email">
                     <Form.Label>Email Address :</Form.Label>
                     <Form.Control type="email" 
-                    value={this.state.email} 
-                    onChange={this.handleEmailChange} 
-                    placeholder="abc@gmail.com"/>
+                    name="email"
+                    onChange={this.handleChange} 
+                    placeholder="abc@gmail.com"
+                    noValidate/>
+                    {formErrors.email.length > 0 && ( <span className="errorMessage">{formErrors.email}</span>)}
                 </Form.Group>
-                <Form.Group controlId="range">
-                    <Form.Label> Your experience in programming</Form.Label>
-                    <Form.Control type="range"
-                    value={this.state.range} 
-                    onChange={this.handleRangeChange} 
-                    />
-                </Form.Group>
-                <Form.Group controlId="gender">
-                    <Form.Label>Gender :</Form.Label>
-                    <br></br>
-                    <Form.Check  type="radio" 
-                    value={this.state.male} 
-                    onChange={this.handleMaleChange} 
-                    inline aria-label="Male" label="Male"/>
-                    <Form.Check  type="radio" 
-                    value={this.state.female} 
-                    onChange={this.handleFemaleChange} 
-                    inline aria-label="Female" label="Female"/>
-                    <Form.Check 
-                    value={this.state.custom} 
-                    onChange={this.handleCustomChange} 
-                     inline aria-label="Male" label="Custom"/>
-                </Form.Group>
+                
+                
                 <Form.Group controlId="Message">
                     <Form.Label>Your Message :</Form.Label>
                     <Form.Control as="textarea" 
-                    value={this.state.message} 
-                    onChange={this.handleMessageChange} 
+                    name="message"
+                    onChange={this.handleChange} 
+                    noValidate
                     rows={3} />
+                    {formErrors.message.length > 0 && ( <span className="errorMessage">{formErrors.message}</span>)}
                 </Form.Group>
                 <Form.Group className="text-center">
                     <Button type="submit" >Send</Button>
